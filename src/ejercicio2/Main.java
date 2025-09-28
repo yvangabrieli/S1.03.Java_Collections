@@ -15,7 +15,7 @@ public class Main {
         System.out.println("Lista1: " + list1);
         ArrayList<Integer> list2 = new ArrayList<>();
         System.out.println("Lista2: " + list2);
-        ListIterator<Integer> iterator = list1.listIterator(6);
+        ListIterator<Integer> iterator = list1.listIterator(list1.size());
         while (iterator.hasPrevious()) {
             Integer previous = iterator.previous();
             list2.add(previous);

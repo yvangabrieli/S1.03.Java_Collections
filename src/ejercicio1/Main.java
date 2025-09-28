@@ -1,47 +1,43 @@
 package ejercicio1;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Month> months = new ArrayList<>();
 
-        months.add(new Month("Enero"));
-        months.add(new Month("Febrero"));
-        months.add(new Month("Marzo"));
-        months.add(new Month("Abril"));
-        months.add(new Month("Mayo"));
-        months.add(new Month("Junio"));
-        months.add(new Month("Julio"));
-        //months.add(new Month("Agosto")); // We will add it later.
-        months.add(new Month("Septiembre"));
-        months.add(new Month("Octubre"));
-        months.add(new Month("Noviembre"));
-        months.add(new Month("Diciembre"));
+        // Make the list without August
+        List<Month> months = MonthFactory.createMonthsWithoutAugust();
+        System.out.println(months);
+        System.out.println();
 
-        months.add(7, new Month("Agosto")); // Add Agosto on his position
+        // Insert August at the correct position
+        MonthUtils.insertMonthAt(months, 7, new Month("August"));
 
-        for (Month m : months) {
-            System.out.println(m);
-        }
-        System.out.println("--------------------------------------");
-        HashSet<Month> monthsSet = new HashSet<Month>(); // Convert the ArrayList to HashSet (NO DUPLICATIONS)
-        monthsSet.add(new Month("Enero"));  // Try to add a duplicate
-        for (Month m : months) {
-            System.out.println(m);
-        }
-        System.out.println("--------------------------------------");
-        System.out.println("Run classic For loop");
-        for (int i = 0; i < months.size(); i++) {
+        // Arraylist shown in order
+        MonthPrinter.printCollection(months, "List in order (Arraylist)");
+        System.out.println();
+
+        // Convert to HashSet and Show (eliminate duplicate and no order guarantee)
+        Set<Month> monthSet = CollectionUtils.toHashSet(months);
+        MonthPrinter.printCollection(monthSet, "List of months (HashSet) - No duplicates: ");
+        System.out.println();
+
+        // Try to duplicate and show the result that is no duplicate
+        boolean added = monthSet.add(new Month("January"));
+        System.out.println("Try to add January to the hashset" + (added ? " (Duplicate)" : " (No duplicate)"));
+        System.out.println();
+
+        // insert  the HashSet with Iterator
+        MonthPrinter.printWithIterator(monthSet, "HashSet with Iterator");
+
+        // Show the List with classic For loop
+        System.out.println("Classic For Loop");
+        for (int i = 0 ; i  < months.size(); i++) {
             System.out.println(months.get(i));
         }
-        System.out.println("--------------------------------------");
-        System.out.println("Run For loop with iterator");
-        Iterator<Month> iter = months.iterator();
-        while (iter.hasNext()) {
-            System.out.println(iter.next());
-        }
+        System.out.println();
     }
 }
